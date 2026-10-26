@@ -2,32 +2,23 @@
 #include <vector>
 using namespace std;
 
-void checker(vector<int>& position , vector<int>& leftptr , vector<int>& list , vector<int>& rightptr , int temp){
-    
-    int i = 1; 
-    int range = list.size();
-    
-    while(i < range){
-        if(list.at(i) < list.at(temp)){         //checks if new item is less than
-            if(leftptr.at(temp) == -1){
-                leftptr.at(temp) = i;
-                i++;
-            }
-            else{
-                temp = leftptr.at(temp);
-                checker(position, leftptr, list, rightptr, temp);
-            }
-        }
-        else if(list.at(i) > list.at(temp)){    //checks if new idem is greater than
-            if(rightptr.at(temp) == -1){
-                rightptr.at(temp) = i;
-                i++;
-            }
-            else{
-                temp = rightptr.at(temp);
-                checker(position, leftptr, list, rightptr, temp);
-            }
-        }
+void checker(vector<int>& position, vector<int>& leftptr, vector<int>& list, vector<int>& rightptr, int current, int item){
+
+    if (list[item] < list[current])
+    {
+        if (leftptr[current] == -1)
+            leftptr[current] = item;
+        else
+            checker(position, leftptr, list, rightptr,
+                    leftptr[current], item);
+    }
+    else if (list[item] > list[current])
+    {
+        if (rightptr[current] == -1)
+            rightptr[current] = item;
+        else
+            checker(position, leftptr, list, rightptr,
+                    rightptr[current], item);
     }
 }
 
